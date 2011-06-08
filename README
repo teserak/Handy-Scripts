@@ -4,7 +4,7 @@ dejson
 
   Pipe output into this and suddenly it's more readable.
 
-  Example: $ curl -s "http://somesite.tld/path/to/resource.json" | dejson
+  Example: $ curl -s 'http://somesite.tld/path/to/resource.json' | dejson
 
 
 deserialise
