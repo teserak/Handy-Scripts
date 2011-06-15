@@ -36,6 +36,6 @@ while True:
 	if line == '':
 		break
 	try:
-		print(line.rstrip("\n"))
+		print(line, end="")
 	except:
 		pass
