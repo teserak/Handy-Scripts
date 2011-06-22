@@ -1,6 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-from sys import argv
-from urllib import quote
+import sys
+from urllib.parse import quote
 
-print quote(argv[1])
+if len(sys.argv) > 1:
+    sys.stdout.write(quote(sys.argv[1]))
+else:
+    sys.stdout.write(quote(sys.stdin.read()))
+
