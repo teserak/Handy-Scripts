@@ -29,6 +29,7 @@ urldecode
   Translates a URL with lots of encoding into something more readable
 
   Example: $ echo "I%20am%20the%20walrus" | urlencode
+  Example: $ cat /path/to/file | urlencode
 
 
 urlencode
@@ -36,4 +37,4 @@ urlencode
   Translates a string into URL-encoded data
 
   Example: $ echo "I am the walrus" | urlencode
-
+  Example: $ cat /path/to/file | urldecode
