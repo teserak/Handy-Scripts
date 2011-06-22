@@ -14,7 +14,7 @@ deserialise
   Example: $ php somecommand.php | deserialise
 
 
-highlight.py
+highlight
 
   Highlight multiple strings in different colours.  Just pipe the output of a
   command through it and include the strings you'd like to see highlighted.
