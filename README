@@ -29,7 +29,7 @@ sgrep
   Not really a drop-in replacement for grep, this script works only with an
   input stream (as opposed to handling options like -r) and does exactly
   what grep does, stripping out the stuff you don't want to see anyway:
-  .svn stuff, .pyc, etc.
+  .svn stuff, .pyc, etc. -- It's buggy though.  I don't like it.
 
 
 urldecode
