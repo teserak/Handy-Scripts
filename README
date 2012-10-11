@@ -24,14 +24,6 @@ highlight
   Example: $ /path/to/some/command | highlight.py alpha bravo charlie delta echo foxtrot golf hotel india
 
 
-sgrep
-
-  Not really a drop-in replacement for grep, this script works only with an
-  input stream (as opposed to handling options like -r) and does exactly
-  what grep does, stripping out the stuff you don't want to see anyway:
-  .svn stuff, .pyc, etc. -- It's buggy though.  I don't like it.
-
-
 urldecode
 
   Translates a URL with lots of encoding into something more readable
@@ -46,3 +38,10 @@ urlencode
 
   Example: $ echo "I am the walrus" | urlencode
   Example: $ cat /path/to/file | urldecode
+
+reverse6
+
+  Takes an IPv6 address and reverses it to play nice with reverse DNS entries.
+
+  Example: $ reverse6 2001:db8::1
+
