@@ -1,2 +1,9 @@
-#!/usr/bin/env php
-<?php print_r(json_decode(file_get_contents('php://stdin'))); ?>
+#!/usr/bin/env python3
+import sys,json
+
+incoming = sys.stdin.read()
+try:
+    print(json.dumps(json.loads(incoming), sort_keys=True, indent=4).replace("\\n","\n"))
+except Exception:
+    print(incoming)
+
