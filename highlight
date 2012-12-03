@@ -28,7 +28,7 @@ while True:
     colour = 0
     for arg in args:
         line = re.sub(
-            r"(%s)" % (arg),
+            "(%s)" % arg,
             "%s%s%s" % (colours[colour], "\g<1>", colours[9]),
             line
         )

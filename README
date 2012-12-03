@@ -39,9 +39,8 @@ urlencode
   Example: $ echo "I am the walrus" | urlencode
   Example: $ cat /path/to/file | urldecode
 
-reverse6
+memorymonitor
 
-  Takes an IPv6 address and reverses it to play nice with reverse DNS entries.
-
-  Example: $ reverse6 2001:db8::1
+  Gets a list of all processes and their memory usage, sorted in a
+  human-readable fashion
 
