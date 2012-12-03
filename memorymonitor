@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+import sys
+
+from subprocess import Popen, PIPE, STDOUT
+from time import sleep
+from re import compile
+
+def scan():
+
+    memory = {
+        "total": 0,
+        "largest": 0,
+    }
+
+    check = "ps ax -o rss,etime,pid,command | sort -n"
+
+    regex = compile(b"^\s*(?P<memory>\d+)\s+(?P<time>[\d:-]+)\s+(?P<pid>\d+)\s+(?P<process>.*)")
+    for line in Popen(check, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT).stdout.readlines():
+
+        m = regex.search(line)
+
+        if m:
+
+            mem = int(m.group("memory"))
+            memory["total"] += mem
+
+            if mem > memory["largest"]:
+                memory["largest"] = mem
+
+            truncated_process = str(m.group("process")[:100], "utf-8")
+            print(" %7.2fM %s" % (float(mem)/1024, truncated_process))
+
+    print("\n\n  Statistics:\n  Largest memory chunk: %7.2fM\n  Total memory use: %7.2fM\n\n" % (
+        memory["largest"]/1024,
+        memory["total"]/1024)
+    )
+
+scan()
+
+
