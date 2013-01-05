@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Sets ${target} and ${excludes}
+source /etc/backup.conf
+
+date=$(date "+%Y%m%dT%H%M%S")
+sudo rsync \
+	--archive \
+	--one-file-system \
+	--link-dest=${target}/current \
+	--delete \
+	--delete-excluded \
+	--exclude=/dev \
+	--exclude=/sys \
+	--exclude=/tmp \
+	--exclude=/proc \
+	--exclude=/mnt \
+	--exclude=/media \
+	--exclude=*.pyc \
+	--exclude=${HOME}/.cache \
+	--exclude=${HOME}/.gvfs \
+	--exclude=${target} \
+	${excludes} \
+	/ ${target}/${date}/
+
+rm -f ${target}/current
+ln -s ${target}/${date} ${target}/current
+
