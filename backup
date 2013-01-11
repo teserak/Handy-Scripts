@@ -23,6 +23,6 @@ sudo rsync \
 	${excludes} \
 	/ ${target}/${date}/
 
-rm -f ${target}/current
-ln -s ${target}/${date} ${target}/current
+sudo rm -f ${target}/current
+sudo ln -s ${target}/${date} ${target}/current
 

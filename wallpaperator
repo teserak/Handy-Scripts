@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+#
+# To make this work, just add the following line to your crontab:
+#   * * * * * DISPLAY=:0 /path/to/wallpaperator
+#
+
+from os import listdir
+from random import randint
+from subprocess import Popen
+
+source = "/home/daniel/Pictures/Wallpaper"
+wallpapers = listdir(source)
+
+cmd = "gsettings set org.gnome.desktop.background picture-uri file://%s/%s" % (
+    source,
+    wallpapers[randint(0, len(wallpapers) - 1)]
+)
+
+Popen(cmd, shell=True)
+
