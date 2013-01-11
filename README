@@ -44,3 +44,13 @@ memorymonitor
   Gets a list of all processes and their memory usage, sorted in a
   human-readable fashion
 
+backup
+
+  Timemachine for Linux.  Choose a target directory and specify any --exclude=
+  entries and it'll backup everything incrementally.
+
+wallpaperator
+
+  A simple wallpaper changer for GNOME.  Just point it at a directory and then
+  run this script via Cron to switch to a random wallpaper every n minutes.
+
