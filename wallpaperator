@@ -12,10 +12,17 @@ from subprocess import Popen
 source = "/home/daniel/Pictures/Wallpaper"
 wallpapers = listdir(source)
 
-cmd = "gsettings set org.gnome.desktop.background picture-uri file://%s/%s" % (
+commands = []
+commands.append("gsettings set org.gnome.desktop.background picture-uri 'file://%s/%s'" % (
     source,
     wallpapers[randint(0, len(wallpapers) - 1)]
-)
+))
 
-Popen(cmd, shell=True)
+# Determines how the image set by wallpaper_filename is rendered. Possible
+# values are "none", "wallpaper", "centered", "scaled", "stretched", "zoom", "spanned".
+# commands.append("gsettings set org.gnome.desktop.background picture-options %s" % ?)
+
+for command in commands:
+	Popen("%s >& /dev/null" % command, shell=True)
+
 
