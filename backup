@@ -17,8 +17,9 @@ sudo rsync \
 	--exclude=/mnt \
 	--exclude=/media \
 	--exclude=*.pyc \
-	--exclude=${HOME}/.cache \
-	--exclude=${HOME}/.gvfs \
+	--exclude=/run/media \
+	--exclude=/home/*/.cache \
+	--exclude=/home/*/.gvfs \
 	--exclude=${target} \
 	${excludes} \
 	/ ${target}/${date}/
