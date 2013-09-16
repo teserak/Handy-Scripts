@@ -57,3 +57,14 @@ entries and it'll backup everything incrementally.
 A simple wallpaper changer for GNOME.  Just point it at a directory and then
 run this script via Cron to switch to a random wallpaper every n minutes.
 
+
+# q
+
+An attempt at a simple "swiss army knife" tool.  The idea is to be able to
+type `q <argument>` and have the script just *know* what I want.  So far it
+supports:
+
+* Unix timestamp to human-readable time
+* Human-readable time to Unix time
+* Simple math
+
