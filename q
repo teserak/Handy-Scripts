@@ -6,6 +6,7 @@
 #
 
 import re
+import socket
 import sys
 from datetime import datetime
 from time import mktime
@@ -67,9 +68,22 @@ if __name__ == "__main__":
     elif re.match(r"^20\d\d", arg):
         kind = "Human Readable Date to Timestamp"
         result = parse_date(arg)
+    elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
+        kind = "Reverse IP Lookup"
+        result = socket.gethostbyaddr(arg)[0]
+    elif re.match(r"^\w+\.\w{2,3}$", arg):
+        kind = "Hostname Lookup"
+        result = socket.gethostbyname(arg)
 
     if result is not None:
-        print("\n  Treating this like a %s\n  Result: %s\n" % (kind, result))
+        print("\n  Treating this like a %s%s%s\n  Result: %s%s%s\n" % (
+            colours['brown'],
+            kind,
+            colours['none'],
+            colours['light-green'],
+            result,
+            colours['none'],
+        ))
         sys.exit(0)
     else:
         print(
