@@ -83,26 +83,40 @@ def parse_domain_name(arg):
         raise Qexception("That domain name didn't make sense")
 
 
+def parse_math(arg):
+
+    try:
+        return eval(arg)
+    except:
+        raise Qexception("That math problem didn't make sense")
+
+
 if __name__ == "__main__":
 
     kind = None
     result = "I have no idea what that is"
     try:
+
         if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
             result = str(datetime.utcfromtimestamp(int(arg)))
             kind = "Timestamp to Human Readable Date"
-        elif re.match(r"^\d+\s+(\+|-|/|\*)\s+\d+", arg):
-            result = eval(arg)
+
+        elif re.match(r"^\d+\s*(\+|-|/|\**?)\s*\d+", arg):
+            result = parse_math(arg)
             kind = "Math Problem"
+
         elif re.match(r"^20\d\d", arg):
             result = parse_date(arg)
             kind = "Human Readable Date to Timestamp"
+
         elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
             result = socket.gethostbyaddr(arg)[0]
             kind = "Reverse IP Lookup"
+
         elif re.match(r"^\w+\.\w{2,3}$", arg):
             result = parse_domain_name(arg)
             kind = "Hostname Lookup"
+
     except Qexception as e:
         result = str(e)
 
