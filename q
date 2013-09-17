@@ -9,14 +9,14 @@
 #
 # * Unix time to human-readable time or the other way around
 #   * Examples:
-#       q 2013 # Human year to Unix time
-#       q 2013-01-01 # Human date to Unix time
+#       q 2013                  # Human year to Unix time
+#       q 2013-01-01            # Human date to Unix time
 #       q '2013-01-01 00:42:42' # Specific human time to Unix time
-#       q 1356994800 # Unix time to human time
+#       q 1356994800            # Unix time to human time
 #
 # * Simple math
 #   * Examples:
-#       q '8 * 42' # The spaces are required
+#       q '8 * 42'              # The spaces are required
 #       q '8 * 42 + 13 ** 12'
 #
 # * DNS lookups (forward and backward)
