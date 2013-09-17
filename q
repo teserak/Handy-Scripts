@@ -2,7 +2,27 @@
 
 #
 # An attempt to make a swiss army knife of stuff I need on the command line
-# often.
+# often.  To use this, simply run `q <argument>` and it should (hopefully)
+# be able to figure out what you want.
+#
+# At present, it supports:
+#
+#   * Unix time to human-readable time or the other way around
+#     * Examples:
+#         q 2013                   # Human year to Unix time
+#         q 2013-01-01             # Human date to Unix time
+#         q '2013-01-01 00:42:42'  # Specific human time to Unix time
+#         q 1356994800             # Unix time to human time
+#
+#   * Simple math
+#     * Examples:
+#         q '8 * 42'  # The spaces are required
+#         q '8 * 42 + 13 ** 12'  # The spaces are required
+#
+#   * DNS lookups (forward and backward)
+#     * Examples:
+#         q danielquinn.org
+#         q 95.211.171.79
 #
 
 import re
