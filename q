@@ -2,27 +2,7 @@
 
 #
 # An attempt to make a swiss army knife of stuff I need on the command line
-# often.  To use this, simply run `q <argument>` and it should (hopefully)
-# be able to figure out what you want.
-#
-# At present, it supports:
-#
-#   * Unix time to human-readable time or the other way around
-#     * Examples:
-#         q 2013                   # Human year to Unix time
-#         q 2013-01-01             # Human date to Unix time
-#         q '2013-01-01 00:42:42'  # Specific human time to Unix time
-#         q 1356994800             # Unix time to human time
-#
-#   * Simple math
-#     * Examples:
-#         q '8 * 42'             # The spaces are required
-#         q '8 * 42 + 13 ** 12'
-#
-#   * DNS lookups (forward and backward)
-#     * Examples:
-#         q danielquinn.org
-#         q 95.211.171.79
+# often.
 #
 
 import re
@@ -78,27 +58,28 @@ def parse_date(arg):
 
 if __name__ == "__main__":
 
-    kind = result = None
+    kind = None
+    result = "I have no idea what that is"
     try:
         if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
-            kind = "Timestamp to Human Readable Date"
             result = str(datetime.utcfromtimestamp(int(arg)))
+            kind = "Timestamp to Human Readable Date"
         elif re.match(r"^\d+\s+(\+|-|/|\*)\s+\d+", arg):
-            kind = "Math Problem"
             result = eval(arg)
+            kind = "Math Problem"
         elif re.match(r"^20\d\d", arg):
-            kind = "Human Readable Date to Timestamp"
             result = parse_date(arg)
+            kind = "Human Readable Date to Timestamp"
         elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
-            kind = "Reverse IP Lookup"
             result = socket.gethostbyaddr(arg)[0]
+            kind = "Reverse IP Lookup"
         elif re.match(r"^\w+\.\w{2,3}$", arg):
-            kind = "Hostname Lookup"
             result = socket.gethostbyname(arg)
-    except Qexception:
-        pass  # `result` remains None
+            kind = "Hostname Lookup"
+    except Qexception as e:
+        result = str(e)
 
-    if result is not None:
+    if kind is not None:
         print("\n  Treating this like a %s%s%s\n  Result: %s%s%s\n" % (
             colours['brown'],
             kind,
@@ -110,8 +91,9 @@ if __name__ == "__main__":
         sys.exit(0)
 
     print(
-        "\n  %sI have no idea what that is\n%s" % (
+        "\n  %s%s\n%s" % (
             colours["light-red"],
+            result,
             colours["none"]
         ),
         file=sys.stderr
