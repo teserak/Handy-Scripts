@@ -56,6 +56,12 @@ def parse_date(arg):
     return int(mktime(timestamp.timetuple()))
 
 
+def parse_domain_name(arg):
+    try:
+        return ", ".join(socket.gethostbyname_ex(arg)[2])
+    except:
+        raise Qexception("That domain name didn't make sense")
+
 if __name__ == "__main__":
 
     kind = None
@@ -74,7 +80,7 @@ if __name__ == "__main__":
             result = socket.gethostbyaddr(arg)[0]
             kind = "Reverse IP Lookup"
         elif re.match(r"^\w+\.\w{2,3}$", arg):
-            result = socket.gethostbyname(arg)
+            result = parse_domain_name(arg)
             kind = "Hostname Lookup"
     except Qexception as e:
         result = str(e)
