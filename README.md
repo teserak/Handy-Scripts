@@ -67,4 +67,4 @@ supports:
 * Unix timestamp to human-readable time
 * Human-readable time to Unix time
 * Simple math
-
+* DNS lookups (forward and reverse)

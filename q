@@ -8,6 +8,7 @@
 import re
 import socket
 import sys
+
 from datetime import datetime
 from time import mktime
 
@@ -47,33 +48,35 @@ def parse_date(arg):
         try:
             timestamp = datetime.strptime(arg, pattern)
             break
-        except:
+        except:  # We handle the potential errors below
             pass
 
-    if timestamp:
-        return int(mktime(timestamp.timetuple()))
-    else:
+    if not timestamp:
         raise Qexception("That time didn't make sense")
+    return int(mktime(timestamp.timetuple()))
 
 
 if __name__ == "__main__":
 
     kind = result = None
-    if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
-        kind = "Timestamp to Human Readable Date"
-        result = str(datetime.utcfromtimestamp(int(arg)))
-    elif re.match(r"^\d+\s+(\+|-|/|\*)\s+\d+", arg):
-        kind = "Math Problem"
-        result = eval(arg)
-    elif re.match(r"^20\d\d", arg):
-        kind = "Human Readable Date to Timestamp"
-        result = parse_date(arg)
-    elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
-        kind = "Reverse IP Lookup"
-        result = socket.gethostbyaddr(arg)[0]
-    elif re.match(r"^\w+\.\w{2,3}$", arg):
-        kind = "Hostname Lookup"
-        result = socket.gethostbyname(arg)
+    try:
+        if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
+            kind = "Timestamp to Human Readable Date"
+            result = str(datetime.utcfromtimestamp(int(arg)))
+        elif re.match(r"^\d+\s+(\+|-|/|\*)\s+\d+", arg):
+            kind = "Math Problem"
+            result = eval(arg)
+        elif re.match(r"^20\d\d", arg):
+            kind = "Human Readable Date to Timestamp"
+            result = parse_date(arg)
+        elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
+            kind = "Reverse IP Lookup"
+            result = socket.gethostbyaddr(arg)[0]
+        elif re.match(r"^\w+\.\w{2,3}$", arg):
+            kind = "Hostname Lookup"
+            result = socket.gethostbyname(arg)
+    except Qexception:
+        pass  # `result` remains None
 
     if result is not None:
         print("\n  Treating this like a %s%s%s\n  Result: %s%s%s\n" % (
@@ -85,12 +88,12 @@ if __name__ == "__main__":
             colours['none'],
         ))
         sys.exit(0)
-    else:
-        print(
-            "\n  %sI have no idea what that is\n%s" % (
-                colours["light-red"],
-                colours["none"]
-            ),
-            file=sys.stderr
-        )
-        sys.exit(1)
+
+    print(
+        "\n  %sI have no idea what that is\n%s" % (
+            colours["light-red"],
+            colours["none"]
+        ),
+        file=sys.stderr
+    )
+    sys.exit(1)
