@@ -16,8 +16,8 @@
 #
 #   * Simple math
 #     * Examples:
-#         q '8 * 42'  # The spaces are required
-#         q '8 * 42 + 13 ** 12'  # The spaces are required
+#         q '8 * 42'             # The spaces are required
+#         q '8 * 42 + 13 ** 12'
 #
 #   * DNS lookups (forward and backward)
 #     * Examples:
