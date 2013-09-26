@@ -51,6 +51,9 @@ arg = sys.argv[1]
 class Qexception(Exception):
     pass
 
+class UnparseableDate(Exception):
+    pass
+
 
 def parse_date(arg):
 
@@ -68,11 +71,11 @@ def parse_date(arg):
         try:
             timestamp = datetime.strptime(arg, pattern)
             break
-        except:  # We handle the potential errors below
+        except ValueError:  # We handle the potential errors below
             pass
 
     if not timestamp:
-        raise Qexception("That time didn't make sense")
+        raise UnparseableDate()
     return int(mktime(timestamp.timetuple()))
 
 
@@ -101,14 +104,6 @@ if __name__ == "__main__":
             result = str(datetime.utcfromtimestamp(int(arg)))
             kind = "Timestamp to Human Readable Date"
 
-        elif re.match(r"^\d+\s*(\+|-|/|\**?)\s*\d+", arg):
-            result = parse_math(arg)
-            kind = "Math Problem"
-
-        elif re.match(r"^20\d\d", arg):
-            result = parse_date(arg)
-            kind = "Human Readable Date to Timestamp"
-
         elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
             result = socket.gethostbyaddr(arg)[0]
             kind = "Reverse IP Lookup"
@@ -116,6 +111,14 @@ if __name__ == "__main__":
         elif re.match(r"^\w+\.\w{2,3}$", arg):
             result = parse_domain_name(arg)
             kind = "Hostname Lookup"
+
+        elif re.match(r"^\d[0-9+/*\-]*$", arg):
+            try:
+                result = parse_date(arg)
+                kind = "Human Readable Date to Timestamp"
+            except UnparseableDate:
+                result = parse_math(arg)
+                kind = "Math Problem"
 
     except Qexception as e:
         result = str(e)
