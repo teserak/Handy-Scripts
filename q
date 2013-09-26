@@ -51,11 +51,12 @@ arg = sys.argv[1]
 class Qexception(Exception):
     pass
 
+
 class UnparseableDate(Exception):
     pass
 
 
-def parse_date(arg):
+def parse_date(argument):
 
     patterns = (
         "%Y-%m-%d %H:%M:%S",
@@ -69,7 +70,7 @@ def parse_date(arg):
     timestamp = None
     for pattern in patterns:
         try:
-            timestamp = datetime.strptime(arg, pattern)
+            timestamp = datetime.strptime(argument, pattern)
             break
         except ValueError:  # We handle the potential errors below
             pass
@@ -79,17 +80,17 @@ def parse_date(arg):
     return int(mktime(timestamp.timetuple()))
 
 
-def parse_domain_name(arg):
+def parse_domain_name(argument):
     try:
-        return ", ".join(socket.gethostbyname_ex(arg)[2])
+        return ", ".join(socket.gethostbyname_ex(argument)[2])
     except:
         raise Qexception("That domain name didn't make sense")
 
 
-def parse_math(arg):
+def parse_math(argument):
 
     try:
-        return eval(arg)
+        return eval(argument)
     except:
         raise Qexception("That math problem didn't make sense")
 
