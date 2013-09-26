@@ -59,16 +59,20 @@ supports:
 
 Translates a URL with lots of encoding into something more readable
 
-  $ echo "I%20am%20the%20walrus" | urldecode
-  $ cat /path/to/file | urldecode
+```bash
+$ echo "I%20am%20the%20walrus" | urldecode
+$ cat /path/to/file | urldecode
+```
 
 
 # urlencode
 
 Translates a string into URL-encoded data
 
-  $ echo "I am the walrus" | urlencode
-  $ cat /path/to/file | urldecode
+```bash
+$ echo "I am the walrus" | urlencode
+$ cat /path/to/file | urldecode
+```
 
 
 # wallpaperator
