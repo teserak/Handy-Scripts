@@ -98,11 +98,11 @@ def parse_math(argument):
 if __name__ == "__main__":
 
     kind = None
-    result = "I have no idea what that is"
+    result = "I have no idea what that is: %s" % arg
     try:
 
         if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
-            result = str(datetime.utcfromtimestamp(int(arg)))
+            result = str(datetime.fromtimestamp(int(arg)))
             kind = "Timestamp to Human Readable Date"
 
         elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
@@ -113,7 +113,7 @@ if __name__ == "__main__":
             result = parse_domain_name(arg)
             kind = "Hostname Lookup"
 
-        elif re.match(r"^\d[0-9+/*\-]*$", arg):
+        elif re.match(r"^\d[0-9+/*\-: ]*$", arg):
             try:
                 result = parse_date(arg)
                 kind = "Human Readable Date to Timestamp"
