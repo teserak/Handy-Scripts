@@ -102,8 +102,8 @@ if __name__ == "__main__":
     try:
 
         if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
-            result = str(datetime.fromtimestamp(int(arg)))
-            kind = "Timestamp to Human Readable Date"
+            result = str(datetime.utcfromtimestamp(int(arg)))
+            kind = "UTC Timestamp to Human Readable Date"
 
         elif re.match(r"^\d+\.\d+\.\d+\.\d+$", arg):
             result = socket.gethostbyaddr(arg)[0]
