@@ -25,6 +25,7 @@
 #       q 95.211.171.79
 #
 
+import math
 import re
 import socket
 import sys
@@ -88,11 +89,24 @@ def parse_domain_name(argument):
 
 
 def parse_math(argument):
-
     try:
         return eval(argument)
     except:
         raise Qexception("That math problem didn't make sense")
+
+
+def parse_location(argument):
+    lat, lng = argument.split(",")
+    lat, lng = float(lat), float(lng)
+    if lat < 1 and lng < 1:
+        return "Radians to Degrees", "{lat},{lng}".format(
+            lat=(lat * 180) / math.pi,
+            lng=(lng * 180) / math.pi
+        )
+    return "Degrees to Radians", "{lat},{lng}".format(
+        lat=(lat * math.pi) / 180,
+        lng=(lng * math.pi) / 180
+    )
 
 
 if __name__ == "__main__":
@@ -101,7 +115,7 @@ if __name__ == "__main__":
     result = "I have no idea what that is: %s" % arg
     try:
 
-        if arg.isdigit and len(arg) == 10 and arg.startswith("13"):
+        if arg.isdigit and len(arg) == 10 and int(arg) < 1500000000:
             result = str(datetime.utcfromtimestamp(int(arg)))
             kind = "UTC Timestamp to Human Readable Date"
 
@@ -120,6 +134,9 @@ if __name__ == "__main__":
             except UnparseableDate:
                 result = parse_math(arg)
                 kind = "Math Problem"
+
+        elif re.match(r"^-?\d*\.?\d*,-?\d*\.?\d*$", arg):
+            kind, result = parse_location(arg)
 
     except Qexception as e:
         result = str(e)
