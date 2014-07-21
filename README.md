@@ -53,6 +53,7 @@ supports:
 * Human-readable time to Unix time
 * Simple math
 * DNS lookups (forward and reverse)
+* Radian/degree conversion
 
 
 # urldecode
@@ -71,7 +72,7 @@ Translates a string into URL-encoded data
 
 ```bash
 $ echo "I am the walrus" | urlencode
-$ cat /path/to/file | urldecode
+$ cat /path/to/file | urlencode
 ```
 
 
@@ -79,4 +80,14 @@ $ cat /path/to/file | urldecode
 
 A simple wallpaper changer for GNOME.  Just point it at a directory and then
 run this script via Cron to switch to a random wallpaper every n minutes.
+
+
+# md2html
+
+Offer up a markdown file (`.md`) and this will spit out HTML.  Redirect the
+output into a something else to make it useful:
+
+```bash
+md2html /path/to/README.md > readme.html
+```
 
