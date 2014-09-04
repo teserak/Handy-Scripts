@@ -115,7 +115,7 @@ if __name__ == "__main__":
     result = "I have no idea what that is: %s" % arg
     try:
 
-        if arg.isdigit and len(arg) == 10 and int(arg) < 1500000000:
+        if arg.isdigit() and len(arg) == 10 and int(arg) < 1500000000:
             result = str(datetime.utcfromtimestamp(int(arg)))
             kind = "UTC Timestamp to Human Readable Date"
 

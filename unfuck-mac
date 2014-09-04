@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#
+# Thanks to https://help.ubuntu.com/community/AppleKeyboard
+#
+
+if [ ${UID} != 0 ]; then
+    echo "This script must be run as root"
+    exit 1
+fi
+
+echo 2 > /sys/module/hid_apple/parameters/fnmode
+
