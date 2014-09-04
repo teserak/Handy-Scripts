@@ -91,3 +91,14 @@ output into a something else to make it useful:
 md2html /path/to/README.md > readme.html
 ```
 
+
+# unfuck-mac
+
+I hate the MacBook Air I'm stuck working on, this little script removes that
+annoying behaviour in which Apple likes to re-purpose my function keys for
+what it thinks are more useful purposes.
+
+```bash
+sudo unfuck-mac
+```
+
