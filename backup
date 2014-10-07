@@ -9,24 +9,26 @@ source /etc/backup.conf
 date=$(date "+%Y%m%dT%H%M%S")
 sudo rsync \
 	--archive \
-	--one-file-system \
-	--link-dest=${target}/current \
+	--link-dest="${target}/current" \
 	--delete \
 	--delete-excluded \
-	--exclude=/dev \
-	--exclude=/sys \
-	--exclude=/tmp \
-	--exclude=/proc \
-	--exclude=/mnt \
-	--exclude=/media \
-	--exclude=*.pyc \
-	--exclude=/run/media \
-	--exclude=/home/*/.cache \
-	--exclude=/home/*/.gvfs \
-	--exclude=${target} \
+	--exclude="/dev" \
+	--exclude="/sys" \
+	--exclude="/tmp" \
+	--exclude="/proc" \
+	--exclude="/mnt" \
+	--exclude="/media" \
+	--exclude="/run" \
+	--exclude="*.pyc" \
+	--exclude="/home/*/.cache" \
+	--exclude="/home/*/.gvfs" \
+	--exclude="/home/*/.vagrant.d" \
+	--exclude="/home/*/VirtualBox VMs" \
+	--exclude="*.box" \
+	--exclude="${target}" \
 	${excludes} \
-	/ ${target}/${date}/
+	/ "${target}/${date}/"
 
-sudo rm -f ${target}/current
-sudo ln -s ${target}/${date} ${target}/current
+sudo rm -f "${target}/current"
+sudo ln -s "${target}/${date}" "${target}/current"
 
