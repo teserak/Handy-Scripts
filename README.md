@@ -92,6 +92,15 @@ md2html /path/to/README.md > readme.html
 ```
 
 
+# git-meld
+
+Simple script to make git use meld instead of it's limited diff tool.  Just
+add the path to this file to your `.git/config` file:
+
+    [diff]
+      external = git-meld
+
+
 # unfuck-mac
 
 I hate the MacBook Air I'm stuck working on, this little script removes that
