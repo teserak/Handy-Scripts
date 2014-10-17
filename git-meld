@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Thanks to:
+#   http://blog.deadlypenguin.com/blog/2011/05/03/using-meld-with-git-diff/
+
+meld ${2} ${5}
+
