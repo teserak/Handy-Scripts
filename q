@@ -46,6 +46,10 @@ colours = {
     "none":        "\033[0m"      # none
 }
 
+if len(sys.argv) == 1:
+    print(colours["light-red"] + "\n  Usage: q <argument>\n" + colours["none"])
+    sys.exit(1)
+
 arg = sys.argv[1]
 
 
