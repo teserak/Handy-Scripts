@@ -1,28 +1,41 @@
 #!/usr/bin/env python3
 
-#
-# To make this work, just add the following line to your crontab:
-#   * * * * * DISPLAY=:0 /path/to/wallpaperator
-#
+import os
+import subprocess
+import random
+import time
 
-from os import listdir
-from random import randint
-from subprocess import Popen
+source = "{}/Pictures/Wallpaper".format(os.environ.get("HOME"))
+target = "{}/.wallpaper".format(os.environ.get("HOME"))
+walls = []
 
-source = "/home/daniel/Pictures/Wallpaper"
-wallpapers = listdir(source)
 
-commands = []
-commands.append("gsettings set org.gnome.desktop.background picture-uri 'file://%s/%s'" % (
-    source,
-    wallpapers[randint(0, len(wallpapers) - 1)]
-))
+def get_wallpapers():
+    r = [os.path.join(source, f) for f in os.listdir(source)]
+    random.shuffle(r)
+    return r
 
-# Determines how the image set by wallpaper_filename is rendered. Possible
-# values are "none", "wallpaper", "centered", "scaled", "stretched", "zoom", "spanned".
-# commands.append("gsettings set org.gnome.desktop.background picture-options %s" % ?)
 
-for command in commands:
-	Popen("%s >& /dev/null" % command, shell=True)
+def set_wallpaper(wallpaper):
+    
+    first_time = not os.path.exists(target)
+    
+    if not walls:
+        walls = get_wallpapers()
 
+    subprocess.Popen("ln -sf '{}' {}".format(wallpaper, target), shell=True)
+
+    if first_time:
+        print(
+            "This is the first time running wallpaperator, so we're creating "
+            "a symlink at {} and telling GNOME to use it for "
+            "wallpaper.".format(target)
+        )
+        subprocess.Popen("gsettings set {} picture-uri 'file://{}'".format(
+            "org.gnome.desktop.background", target))
+
+
+while True:
+    set_wallpaper(walls.pop())
+    time.sleep(60)
 
