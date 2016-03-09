@@ -10,32 +10,44 @@ target = "{}/.wallpaper".format(os.environ.get("HOME"))
 walls = []
 
 
-def get_wallpapers():
-    r = [os.path.join(source, f) for f in os.listdir(source)]
-    random.shuffle(r)
-    return r
+class Wallpaper(object):
 
+    SLEEP_TIME = 60  # Seconds
 
-def set_wallpaper(wallpaper):
-    
-    first_time = not os.path.exists(target)
-    
-    if not walls:
-        walls = get_wallpapers()
+    SOURCE = "{}/Pictures/Wallpaper".format(os.environ.get("HOME"))
+    TARGET = "{}/.wallpaper".format(os.environ.get("HOME"))
 
-    subprocess.Popen("ln -sf '{}' {}".format(wallpaper, target), shell=True)
+    def __init__(self):
+        
+        self.walls = []
+        self.populate()
 
-    if first_time:
-        print(
-            "This is the first time running wallpaperator, so we're creating "
-            "a symlink at {} and telling GNOME to use it for "
-            "wallpaper.".format(target)
-        )
-        subprocess.Popen("gsettings set {} picture-uri 'file://{}'".format(
-            "org.gnome.desktop.background", target))
+        if not os.path.exists(self.TARGET):
+            print(
+                "This is the first time running wallpaperator, so we're creating "
+                "a symlink at {} and telling GNOME to use it for "
+                "wallpaper.".format(target)
+            )
+            self.set();
+            subprocess.Popen("gsettings set {} picture-uri 'file://{}'".format(
+                "org.gnome.desktop.background", target), shell=True)
+            time.sleep(self.SLEEP_TIME)
 
+    def populate(self):
+        self.walls = [os.path.join(self.SOURCE, f) for f in os.listdir(self.SOURCE)]
+        random.shuffle(self.walls)
 
-while True:
-    set_wallpaper(walls.pop())
-    time.sleep(60)
+    def set(self):
+        subprocess.Popen(
+        "ln -sf '{}' {}".format(self.walls.pop(), target), shell=True)
+
+    def loop(self):
+        while True:
+            if not self.walls:
+                self.populate()
+            self.set()
+            time.sleep(self.SLEEP_TIME)
+
+if __name__ == "__main__":
+    Wallpaper().loop()
 
