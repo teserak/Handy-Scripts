@@ -1,13 +1,29 @@
 #!/usr/bin/env python3
 
+#
+# Just run this in a terminal or put it into a service script and it'll run as
+# a daemon.  The first time it executes, it'll place a symlink at
+# ${HOME}/.wallpaper, and tell GNOME to use that as the wallpaper.
+#
+# By default, it'll look for files in ${HOME}/Pictures/Wallpaper, but you can
+# tell it to use a different directory by passing a path in as the first
+# argument:
+#
+#   $ wallpaperator /path/to/my/wallpapers
+#
+
 import os
 import subprocess
+import sys
 import random
 import time
 
-source = "{}/Pictures/Wallpaper".format(os.environ.get("HOME"))
-target = "{}/.wallpaper".format(os.environ.get("HOME"))
+source = "{}/Pictures/Wallpaper".format(os.getenv("HOME"))
+target = "{}/.wallpaper".format(os.getenv("HOME"))
 walls = []
+
+if len(sys.argv) == 2:
+    source = sys.argv[1]
 
 
 class Wallpaper(object):
@@ -34,19 +50,27 @@ class Wallpaper(object):
             time.sleep(self.SLEEP_TIME)
 
     def populate(self):
-        self.walls = [os.path.join(self.SOURCE, f) for f in os.listdir(self.SOURCE)]
+        self.walls = []
+        for f in os.listdir(self.SOURCE):
+            if f.split(".")[-1].lower() in ("png", "jpg", "gif"):
+                self.walls.append(os.path.join(self.SOURCE, f))
         random.shuffle(self.walls)
 
     def set(self):
-        subprocess.Popen(
-        "ln -sf '{}' {}".format(self.walls.pop(), target), shell=True)
+        wall = self.walls.pop()
+        print(wall)
+        subprocess.Popen("ln -sf '{}' {}".format(wall, target), shell=True)
 
     def loop(self):
-        while True:
-            if not self.walls:
-                self.populate()
-            self.set()
-            time.sleep(self.SLEEP_TIME)
+        try:
+            while True:
+                if not self.walls:
+                    self.populate()
+                self.set()
+                time.sleep(self.SLEEP_TIME)
+        except KeyboardInterrupt:
+            print("Exiting")
+
 
 if __name__ == "__main__":
     Wallpaper().loop()
