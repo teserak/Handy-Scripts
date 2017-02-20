@@ -20,4 +20,3 @@ alias please='sudo $(fc -n -l -1)'
 alias mpv-loud="mplayer -fs -af volume=+15dB "
 alias yt="youtube-dl --format best --title "
 alias servethis="python3 -m http.server"
-
