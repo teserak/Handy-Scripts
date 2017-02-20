@@ -7,18 +7,9 @@ Timemachine for Linux.  Choose a target directory and specify any `--exclude=`
 entries and it'll backup everything incrementally.
 
 
-# dejson
-
-Pipe output into this and suddenly it's more readable.
-
-```bash
-$ curl -s 'http://somesite.tld/path/to/resource.json' | dejson
-```
-
-
 # deserialise
 
-Does the same as dejson, but for PHP's serialize() function.
+Takes a PHP-serialized string and makes it readable.
 
 ```bash
 $ php somecommand.php | deserialise
@@ -76,12 +67,6 @@ $ cat /path/to/file | urlencode
 ```
 
 
-# wallpaperator
-
-A simple wallpaper changer for GNOME.  Just point it at a directory and then
-run this script via Cron to switch to a random wallpaper every n minutes.
-
-
 # md2html
 
 Offer up a markdown file (`.md`) and this will spit out HTML.  Redirect the
@@ -103,9 +88,10 @@ add the path to this file to your `.git/config` file:
 
 # unfuck-mac
 
-I hate the MacBook Air I'm stuck working on, this little script removes that
-annoying behaviour in which Apple likes to re-purpose my function keys for
-what it thinks are more useful purposes.
+Apple device like to impose The Apple Way of doing things on you, and as I was
+compelled to use one years ago, I found this little script to be helpful.  It
+removes that annoying behaviour in which Apple likes to re-purpose my function
+keys for what it thinks are more useful purposes.
 
 ```bash
 sudo unfuck-mac
