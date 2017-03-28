@@ -6,30 +6,40 @@ function setprompt {
   ## Set some colours for easy reference.
   ##
 
-  local        BLACK="\[\033[0;30m\]"
-  local        WHITE="\[\033[1;37m\]"
-  local         BLUE="\[\033[0;34m\]"
-  local        GREEN="\[\033[0;32m\]"
-  local         CYAN="\[\033[0;36m\]"
-  local          RED="\[\033[0;31m\]"
-  local       YELLOW="\[\033[1;33m\]"
-  local       PURPLE="\[\033[0;35m\]"
-  local        BROWN="\[\033[0;33m\]"
-  local         GREY="\[\033[1;30m\]"
-  local   LIGHT_GREY="\[\033[0;37m\]"
-  local   LIGHT_BLUE="\[\033[1;34m\]"
-  local  LIGHT_GREEN="\[\033[1;32m\]"
-  local   LIGHT_CYAN="\[\033[1;36m\]"
-  local    LIGHT_RED="\[\033[1;31m\]"
-  local LIGHT_PURPLE="\[\033[1;35m\]"
-  local    NO_COLOUR="\[\033[0m\]"
+  local        black="\[\033[0;30m\]"
+  local        white="\[\033[1;37m\]"
+  local         blue="\[\033[0;34m\]"
+  local        green="\[\033[0;32m\]"
+  local         cyan="\[\033[0;36m\]"
+  local          red="\[\033[0;31m\]"
+  local       yellow="\[\033[1;33m\]"
+  local       purple="\[\033[0;35m\]"
+  local        brown="\[\033[0;33m\]"
+  local         grey="\[\033[1;30m\]"
+  local   light_grey="\[\033[0;37m\]"
+  local   light_blue="\[\033[1;34m\]"
+  local  light_green="\[\033[1;32m\]"
+  local   light_cyan="\[\033[1;36m\]"
+  local    light_red="\[\033[1;31m\]"
+  local light_purple="\[\033[1;35m\]"
+  local    no_colour="\[\033[0m\]"
 
 
   # set date colour based on $PROMPT_HOST_COLOUR or use a default
 
-  local HOST_COLOUR=${GREY}
+  local host_colour=${grey}
   if [[ "${PROMPT_HOST_COLOUR}" != "" ]]; then
-    HOST_COLOUR=${PROMPT_HOST_COLOUR}
+    host_colour=${PROMPT_HOST_COLOUR}
+  fi
+
+  local load_high=4
+  if [[ "${PROMPT_LOAD_HIGH}" != "" ]]; then
+    load_high=${PROMPT_LOAD_HIGH}
+  fi
+
+  local load_low=2
+  if [[ "${PROMPT_LOAD_LOW}" != "" ]]; then
+    load_low=${PROMPT_LOAD_LOW}
   fi
 
   ##
@@ -44,28 +54,28 @@ function setprompt {
   local load_5_int=$(echo ${load_5} | sed -e 's/^\([0-9]\+\).*/\1/')
   local load_15_int=$(echo ${load_15} | sed -e 's/^\([0-9]\+\).*/\1/')
 
-  if [ ${load_1_int} -lt 2 ]; then
-    load_1c="${LIGHT_GREEN}${load_1}${NO_COLOUR}"
-  elif [ ${load_1_int} -lt 4 ]; then
-    load_1c="${YELLOW}${load_1}${NO_COLOUR}"
+  if [ ${load_1_int} -lt ${load_low} ]; then
+    load_1c="${light_green}${load_1}${no_colour}"
+  elif [ ${load_1_int} -lt ${load_high} ]; then
+    load_1c="${yellow}${load_1}${no_colour}"
   else
-    load_1c="${LIGHT_RED}${load_1}${NO_COLOUR}"
+    load_1c="${light_red}${load_1}${no_colour}"
   fi
 
-  if [ ${load_5_int} -lt 2 ]; then
-    load_5c="${LIGHT_GREEN}${load_5}${NO_COLOUR}"
-  elif [ ${load_5_int} -lt 4 ]; then
-    load_5c="${YELLOW}${load_5}${NO_COLOUR}"
+  if [ ${load_5_int} -lt ${load_low} ]; then
+    load_5c="${light_green}${load_5}${no_colour}"
+  elif [ ${load_5_int} -lt ${load_high} ]; then
+    load_5c="${yellow}${load_5}${no_colour}"
   else
-    load_5c="${LIGHT_RED}${load_5}${NO_COLOUR}"
+    load_5c="${light_red}${load_5}${no_colour}"
   fi
 
-  if [ ${load_15_int} -lt 2 ]; then
-    load_15c="${LIGHT_GREEN}${load_15}${NO_COLOUR}"
-  elif [ ${load_15_int} -lt 4 ]; then
-    load_15c="${YELLOW}${load_15}${NO_COLOUR}"
+  if [ ${load_15_int} -lt ${load_low} ]; then
+    load_15c="${light_green}${load_15}${no_colour}"
+  elif [ ${load_15_int} -lt ${load_high} ]; then
+    load_15c="${yellow}${load_15}${no_colour}"
   else
-    load_15c="${LIGHT_RED}${load_15}${NO_COLOUR}"
+    load_15c="${light_red}${load_15}${no_colour}"
   fi
 
   
@@ -85,11 +95,11 @@ function setprompt {
   local df=$(df -P /| awk '$6 ~ "^/$" { print $5 }' | sed -e 's/\(.\+\)./\1/')
 
   if [[ ${df} -lt 70 ]]; then
-    df_all="${LIGHT_GREEN}r:${df}%${NO_COLOUR}"
+    df_all="${light_green}r:${df}%${no_colour}"
   elif [[ ${df} -lt 90 ]]; then
-    df_all="${YELLOW}r:${df}%${NO_COLOUR}"
+    df_all="${yellow}r:${df}%${no_colour}"
   else
-    df_all="${LIGHT_RED}r:${df}%${NO_COLOUR}"
+    df_all="${light_red}r:${df}%${no_colour}"
   fi
 
   if [[ "${PROMPT_DF}" != "" ]]; then
@@ -103,11 +113,11 @@ function setprompt {
       local df_tmp=$(df -P ${path} | awk '$6 ~ "^'${path}'$" { print $5 }' | sed -e 's/\(.\+\)./\1/')
 
       if [[ ${df_tmp} -lt 70 ]]; then
-        df_tmp="${LIGHT_GREEN}${letter}:${df_tmp}%${NO_COLOUR}"
+        df_tmp="${light_green}${letter}:${df_tmp}%${no_colour}"
       elif [[ ${df_tmp} -lt 90 ]]; then
-        df_tmp="${YELLOW}${letter}:${df_tmp}%${NO_COLOUR}"
+        df_tmp="${yellow}${letter}:${df_tmp}%${no_colour}"
       else
-        df_tmp="${LIGHT_RED}${letter}:${df_tmp}%${NO_COLOUR}"
+        df_tmp="${light_red}${letter}:${df_tmp}%${no_colour}"
       fi
       
       df_all="${df_all} ${df_tmp}"
@@ -123,11 +133,11 @@ function setprompt {
   local connections=$(netstat -nut | egrep '^tcp|udp' | wc -l)
 
   if [ ${connections} -lt 25 ]; then
-    connections="${LIGHT_GREEN}+${connections}${NO_COLOUR}"
+    connections="${light_green}+${connections}${no_colour}"
   elif [ ${connections} -lt 50 ]; then
-    connections="${YELLOW}+${connections}${NO_COLOUR}"
+    connections="${yellow}+${connections}${no_colour}"
   else
-    connections="${LIGHT_RED}+${connections}${NO_COLOUR}"
+    connections="${light_red}+${connections}${no_colour}"
   fi
 
 
@@ -142,11 +152,11 @@ function setprompt {
     battery=$(</sys/class/power_supply/BAT0/capacity)
 
     if [[ ${battery} -lt 25 ]]; then
-      battery="${LIGHT_RED}${battery}${NO_COLOUR}"
+      battery="${light_red}${battery}${no_colour}"
     elif [[ ${battery} -lt 50 ]]; then
-      battery="${YELLOW}${battery}${NO_COLOUR}"
+      battery="${yellow}${battery}${no_colour}"
     else
-      battery="${LIGHT_GREEN}${battery}${NO_COLOUR}"
+      battery="${light_green}${battery}${no_colour}"
     fi
 
   fi
@@ -158,7 +168,7 @@ function setprompt {
   local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   if [[ ${branch} ]]; then
     commit=$(git rev-parse --short HEAD)
-    branch="${WHITE}[${GREEN}${branch}:${commit}${WHITE}]${NO_COLOUR}"
+    branch="${white}[${green}${branch}:${commit}${white}]${no_colour}"
   fi
 
   ##
@@ -168,7 +178,7 @@ function setprompt {
   local virtualenv=${VIRTUAL_ENV}
   if [[ ${virtualenv} ]]; then
     virtualenv=$(echo ${virtualenv} | sed -e 's#^.*virtualenvs/##')
-    virtualenv=" ${BLUE}${virtualenv}${NO_COLOUR}"
+    virtualenv=" ${blue}${virtualenv}${no_colour}"
   fi
 
   ##
@@ -176,9 +186,9 @@ function setprompt {
   ##
 
   if [[ $UID -eq 0 ]]; then
-    local user="${WHITE}[${LIGHT_RED}\u${WHITE}@${HOST_COLOUR}\h${WHITE}]"
+    local user="${white}[${light_red}\u${white}@${host_colour}\h${white}]"
   else
-    local user="${WHITE}[${HOST_COLOUR}\u@\h${WHITE}]"
+    local user="${white}[${host_colour}\u@\h${white}]"
   fi
 
   ##
@@ -187,7 +197,7 @@ function setprompt {
 
   local battery_line=""
   if [[ "${battery}" != "" ]]; then
-    battery_line="${WHITE}[${NO_COLOUR}${battery}${WHITE}]${NO_COLOUR}"
+    battery_line="${white}[${no_colour}${battery}${white}]${no_colour}"
   fi
   
   ##
@@ -195,17 +205,17 @@ function setprompt {
   ##
   local df_line=""
   for df in ${df_all}; do
-    df_line="${df_line}${WHITE}[${NO_COLOUR}${df}${WHITE}]${NO_COLOUR}"
+    df_line="${df_line}${white}[${no_colour}${df}${white}]${no_colour}"
   done
   
 
 PS1="\[\e]0;\a\]${user}\
-${WHITE}[${NO_COLOUR}${load_1c}|${load_5c}|${load_15c}${WHITE}]${NO_COLOUR}\
+${white}[${no_colour}${load_1c}|${load_5c}|${load_15c}${white}]${no_colour}\
 ${df_line}\
-${WHITE}[${NO_COLOUR}${connections}${WHITE}]${NO_COLOUR}\
+${white}[${no_colour}${connections}${white}]${no_colour}\
 ${battery_line}\
-${WHITE}[${CYAN}\w$WHITE]${branch}${NO_COLOUR}\n\
-${WHITE}(${CYAN}`date '+%F %T'`${virtualenv}${WHITE}) \\$ ${NO_COLOUR}"
+${white}[${cyan}\w$white]${branch}${no_colour}\n\
+${white}(${cyan}`date '+%F %T'`${virtualenv}${white}) \\$ ${no_colour}"
 
 }
 
