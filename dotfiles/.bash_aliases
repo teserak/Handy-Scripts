@@ -10,7 +10,7 @@ alias egrep="egrep --colour=auto"
 alias cfgrep='egrep -v "^[[:space:]]*($|#)"'
 
 alias sp="./manage.py shell_plus"
-alias rs="./manage.py runserver"
+alias rs="DJANGO_DEBUG_LEVEL=INFO ./manage.py runserver"
 alias ds="./manage.py dbshell"
 
 alias py2=". ~/.virtualenvs/scratch2/bin/activate"
