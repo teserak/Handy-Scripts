@@ -20,3 +20,5 @@ alias please='sudo $(fc -n -l -1)'
 alias mpv-loud="mplayer -fs -af volume=+15dB "
 alias yt="youtube-dl --format best --title "
 alias servethis="python3 -m http.server"
+alias subvert-tether="sudo sysctl net.ipv4.ip_default_ttl=65"
+alias docker-cleanup="docker ps --filter 'status=exited' | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm"
