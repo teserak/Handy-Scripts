@@ -18,7 +18,7 @@ alias py3=". ~/.virtualenvs/scratch3/bin/activate"
 
 alias please='sudo $(fc -n -l -1)'
 alias mpv-loud="mplayer -fs -af volume=+15dB "
-alias yt="youtube-dl --format best --title "
+alias yt="youtube-dl --format best -o '%(title)s-%(id)s.%(ext)s' "
 alias servethis="python3 -m http.server"
 alias docker-cleanup="docker ps --filter 'status=exited' | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm"
 
