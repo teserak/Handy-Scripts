@@ -15,6 +15,7 @@ alias ds="./manage.py dbshell"
 
 alias py2=". ~/.virtualenvs/scratch2/bin/activate"
 alias py3=". ~/.virtualenvs/scratch3/bin/activate"
+alias venv="python3 -m venv ${1}"
 
 alias please='sudo $(fc -n -l -1)'
 alias mpv-loud="mplayer -fs -af volume=+15dB "
