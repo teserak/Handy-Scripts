@@ -37,3 +37,12 @@ function rebuild-virtualenv {
   . ${path}/bin/activate
 }
 
+function xtar {
+  local source=${1}
+  local destination=${2}
+  if [[ ! ${source} || ! ${destination} ]]; then
+    echo "Usage: xtar <source> <destination>"
+    return
+  fi
+  tar -c --to-stdout ${source} | xz -9 --threads=0 --to-stdout > ${destination}
+}
