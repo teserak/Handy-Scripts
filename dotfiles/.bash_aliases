@@ -15,6 +15,7 @@ alias ds="./manage.py dbshell"
 
 alias py2=". ~/.virtualenvs/scratch2/bin/activate"
 alias py3=". ~/.virtualenvs/scratch3/bin/activate"
+alias venv="python3 -m venv ${1}"
 
 alias please='sudo $(fc -n -l -1)'
 alias mpv-loud="mplayer -fs -af volume=+15dB "
@@ -46,3 +47,14 @@ function comcast {
     sudo tc qdisc delete dev ${device} root
   fi
 }
+
+function xtar {
+  local source=${1}
+  local destination=${2}
+  if [[ ! ${source} || ! ${destination} ]]; then
+    echo "Usage: xtar <source> <destination>"
+    return
+  fi
+  tar -c --to-stdout ${source} | xz -9 --threads=0 --to-stdout > ${destination}
+}
+
