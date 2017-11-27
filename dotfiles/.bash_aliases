@@ -36,3 +36,13 @@ function rebuild-virtualenv {
   . ${path}/bin/activate
 }
 
+function comcast {
+  local device=$(netstat -rn | egrep "^0\.0\.0\.0" | awk '{print $8}')
+  if [[ "${1}" = "fucked" ]]; then
+    echo "Welcome to Australia!"
+    sudo tc qdisc add dev ${device} root netem delay 100ms
+  else
+    echo "Removing network crippling"
+    sudo tc qdisc delete dev ${device} root
+  fi
+}
