@@ -21,6 +21,7 @@ alias please='sudo $(fc -n -l -1)'
 alias mpv-loud="mplayer -fs -af volume=+15dB "
 alias yt="youtube-dl --format best -o '%(title)s-%(id)s.%(ext)s' "
 alias servethis="python3 -m http.server"
+alias whatismyip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 
 alias docker-cleanup="docker ps --filter 'status=exited' | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm"
 alias python-cleanup="rm \$(find . -name '*.pyc')"
