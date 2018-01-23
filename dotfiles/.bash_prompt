@@ -177,7 +177,7 @@ function setprompt {
 
   local virtualenv=${VIRTUAL_ENV}
   if [[ ${virtualenv} ]]; then
-    virtualenv=$(echo ${virtualenv} | sed -e 's#^.*virtualenvs/##')
+    virtualenv=$(echo ${virtualenv} | sed -E 's#^.*virtualenvs/(.*?)-[^-]*#\1#')
     virtualenv=" ${blue}${virtualenv}${no_colour}"
   fi
 
